@@ -27,6 +27,7 @@ The framework follows the Page Object Model (POM) pattern to improve maintainabi
 
 ### Project Structure
 
+```text
 riva-playwright-project/
 │
 ├── pages/
@@ -46,7 +47,7 @@ riva-playwright-project/
 ├── playwright.config.ts
 ├── package.json
 └── README.md
-
+```
 
 ### Design Decisions
 
