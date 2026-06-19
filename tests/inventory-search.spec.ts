@@ -3,9 +3,7 @@ import { LoginPage } from '../pages/LoginPage';
 import { InventoryPage } from '../pages/InventoryPage';
 
 test.describe('Inventory Search', () => {
-
-  test('should filter products based on search text', async ({ page }) => {
-
+  test('should filter products by search text and restore results when search is cleared', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const inventoryPage = new InventoryPage(page);
 
@@ -14,20 +12,17 @@ test.describe('Inventory Search', () => {
 
     await inventoryPage.verifyInventoryPageLoaded();
 
-    const initialCount =
-      await inventoryPage.getVisibleProductCount();
+    await inventoryPage.verifyProductVisible('Wireless Mouse');
+    await inventoryPage.verifyProductVisible('Coffee Maker');
 
-    await inventoryPage.searchForProduct('Wireless');
+    await inventoryPage.searchForProduct('Mouse');
 
     await inventoryPage.verifyProductVisible('Wireless Mouse');
-
     await inventoryPage.verifyProductNotVisible('Coffee Maker');
 
-    const filteredCount =
-      await inventoryPage.getVisibleProductCount();
+    await inventoryPage.searchForProduct('');
 
-    expect(filteredCount).toBeLessThan(initialCount);
-
+    await inventoryPage.verifyProductVisible('Wireless Mouse');
+    await inventoryPage.verifyProductVisible('Coffee Maker');
   });
-
 });
